@@ -3,7 +3,7 @@ import yt_dlp
 import os
 
 # SOZLAMALAR
-TOKEN = '8350288555:AAFcVWJ6pxtaIxLQRF-8U-Ws4nRiMADR0I'
+TOKEN = '8350288555:AAFOHfC5qissUqtyjCGpD1v9ctD3BdV-86Q'
 KANAL_ID = '@uz_kayfiyat_kliplar' # Bu yerda 'i' harfi bilan yozildi
 
 bot = telebot.TeleBot(TOKEN)
