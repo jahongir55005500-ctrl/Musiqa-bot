@@ -5,7 +5,7 @@ from telebot import types
 
 # SOZLAMALAR
 TOKEN = '8350288555:AAFcVWJ6pxtaIxLQRF-8U-Ws4nRiMADR0I'
-KANAL_ID = '@uz_kayfiyat_kliplar'
+KANAL_ID = '@uz_kayfuyat_kliplar'
 
 bot = telebot.TeleBot(TOKEN)
 
