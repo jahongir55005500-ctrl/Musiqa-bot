@@ -5,7 +5,7 @@ from telebot import types
 
 # SOZLAMALAR
 TOKEN = '8350288555:AAFOHfC5qissUqtyjCGpD1v9ctD3BdV-86Q'
-KANAL_ID = '@uz_kayfuyat_kliplar'
+KANAL_ID = '@aslwaynemusic_lyrics'
 
 bot = telebot.TeleBot(TOKEN)
 
