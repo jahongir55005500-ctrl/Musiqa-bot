@@ -46,11 +46,17 @@ def search_music(message):
     }
 
     try:
-        with yt_dlp.YoutubeDL(ydl_opts) as ydl:
-            info = ydl.extract_info(query, download=False)
-            if 'entries' not in info or not info['entries']:
-                bot.edit_message_text("❌ Hech narsa topilmadi.", message.chat.id, m.message_id)
-                return
+          ydl_opts = {
+        'format': 'wa[ext=m4a]/bestaudio/best', # Eng tez yuklanadigan format
+        'outtmpl': '%(title)s.%(ext)s',
+        'quiet': True,
+        'postprocessors': [{
+            'key': 'FFmpegExtractAudio',
+            'preferredcodec': 'm4a', # Qayta ishlashni talab qilmaydigan format
+        }],
+    }
+
+            
 
             markup = types.InlineKeyboardMarkup()
             text = "🎵 **Qaysi birini yuklamoqchisiz?**\n\n"
