@@ -4,7 +4,7 @@ import os
 from telebot import types
 
 # SOZLAMALAR
-TOKEN = '8350288555:AAFcVWJ6pxtaIxLQRF-8U-Ws4nRiMADR0I'
+TOKEN = '8350288555:AAFOHfC5qissUqtyjCGpD1v9ctD3BdV-86Q'
 KANAL_ID = '@uz_kayfuyat_kliplar'
 
 bot = telebot.TeleBot(TOKEN)
