@@ -83,4 +83,3 @@ def check_callback(call):
         bot.answer_callback_query(call.id, "❌ Hali a'zo bo'lmadingiz!", show_alert=True)
 
 bot.infinity_polling()
-)
