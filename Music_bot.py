@@ -3,7 +3,7 @@ from telebot import types
 import yt_dlp
 import os
 
-TOKEN = '7970907983:AAFTsGhWGk2URyIlgOihNbRuSrF-53xqAAI'
+TOKEN = '8350288555:AAFOHfC5qissUqtyjCGpD1v9ctD3BdV-86Q'
 KANAL_ID = '@uz_kayfiyat_kliplar'
 bot = telebot.TeleBot(TOKEN)
 
