@@ -42,7 +42,7 @@ def search_music(message):
     ydl_opts = {
         'format': 'bestaudio/best',
         'noplaylist': True,
-        'default_search': 'ytsearch5', # 5 ta natija qidiradi
+        'default_search': 'scsearch5', # 5 ta natija qidiradi
         'quiet': True
     }
 
