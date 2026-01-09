@@ -5,6 +5,7 @@ import os
 
 TOKEN = '8350288555:AAF9vnKGF50isbJLvKUcEWhXAxf5ZoRVEHA'
 KANAL_ID = '@uz_kayfiyat_kliplar'
+KANAL_ID = '@waveoffeilings001' 
 bot = telebot.TeleBot(TOKEN)
 
 def check_sub(user_id):
