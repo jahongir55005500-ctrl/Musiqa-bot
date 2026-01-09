@@ -3,7 +3,7 @@ from telebot import types
 import yt_dlp
 import os
 
-TOKEN = '8350288555:AAFOHfC5qissUqtyjCGpD1v9ctD3BdV-86Q'
+TOKEN = '7970907983:AAFTsGhWGk2URyIlgOihNbRuSrF-53xqAAI'
 KANAL_ID = '@uz_kayfiyat_kliplar'
 bot = telebot.TeleBot(TOKEN)
 
@@ -62,18 +62,23 @@ def search_music(message):
 
         bot.edit_message_text(text, message.chat.id, m.message_id, reply_markup=markup, parse_mode='Markdown')
     except Exception as e:
-        bot.edit_message_text("❌ Xato! Keyinroq urinib ko'ring.", message.chat.id, m.message_id)
+        bot.edit_message_text("❌ Musiqa topilmadi. Boshqa nom yozib ko'ring.", message.chat.id, m.message_id)
 
 @bot.callback_query_handler(func=lambda call: call.data.startswith('dl_'))
 def download_selected(call):
-    if call.data not in search_results:
-        bot.answer_callback_query(call.id, "Eski ma'lumot. Iltimos qaytadan qidiring.")
+    # Faqat so'rov yuborgan odam yuklay oladi
+    user_id = int(call.data.split('_')[2])
+    if call.from_user.id != user_id:
+        bot.answer_callback_query(call.id, "⚠️ Bu qidiruv sizga tegishli emas!")
         return
 
-    data = search_results[call.data]
+    data = search_results.get(call.data)
+    if not data:
+        bot.answer_callback_query(call.id, "❌ Ma'lumot eskirgan, qayta qidiring")
+        return
+
     bot.edit_message_text(f"📥 Yuklanmoqda: **{data['title']}**", call.message.chat.id, call.message.message_id, parse_mode='Markdown')
 
-    # SoundCloud orqali yuklash sozlamasi
     ydl_opts = {
         'format': 'bestaudio/best',
         'outtmpl': '%(title)s.%(ext)s',
@@ -89,14 +94,27 @@ def download_selected(call):
     try:
         with yt_dlp.YoutubeDL(ydl_opts) as ydl:
             info = ydl.extract_info(data['url'], download=True)
-            filename = ydl.prepare_filename(info).replace('.webm', '.mp3').replace('.m4a', '.mp3')
+            filename = ydl.prepare_filename(info)
+            # Mp3 kengaytmasini to'g'irlash
+            if not filename.endswith('.mp3'):
+                base = os.path.splitext(filename)[0]
+                os.rename(filename, base + ".mp3")
+                filename = base + ".mp3"
 
         with open(filename, 'rb') as audio:
-            bot.send_audio(call.message.chat.id, audio, title=data['title'], performer=data['performer'])
+            bot.send_audio(
+                call.message.chat.id, 
+                audio, 
+                title=data['title'], 
+                performer=data['performer'],
+                caption=f"🎵 {data['title']}\n🤖 @{bot.get_me().username}"
+            )
         
-        os.remove(filename)
+        if os.path.exists(filename):
+            os.remove(filename)
         bot.delete_message(call.message.chat.id, call.message.message_id)
+
     except Exception as e:
-        bot.send_message(call.message.chat.id, f"❌ Yuklashda xatolik yuz berdi.")
+        bot.send_message(call.message.chat.id, "❌ Yuklashda xatolik yuz berdi. Boshqa variantni sinab ko'ring.")
 
 bot.infinity_polling()
