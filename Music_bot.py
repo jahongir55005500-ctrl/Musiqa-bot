@@ -4,7 +4,7 @@ import yt_dlp
 import os
 
 # YANGI TOKENNI SHU YERGA QO'YING
-TOKEN = '8350288555:AAHX2xPZ1NsnaACQBxr-6PcPWWfaIWWuHIM'
+TOKEN = 'BU_YERGA_YANGI_TOKENNI_QO_YING'
 KANAL_ID = '@uz_kayfiyat_kliplar'
 bot = telebot.TeleBot(TOKEN)
 
@@ -54,30 +54,31 @@ def search_music(message):
 def download_selected(call):
     user_id = int(call.data.split('_')[2])
     if call.from_user.id != user_id:
-        bot.answer_callback_query(call.id, "⚠️ Bu qidiruv sizga tegishli emas!")
+        bot.answer_callback_query(call.id, "⚠️ Xato!")
         return
     data = search_results.get(call.data)
-    if not data:
-        bot.answer_callback_query(call.id, "❌ Ma'lumot eskirgan")
-        return
-    bot.edit_message_text(f"📥 Yuklanmoqda: **{data['title']}**", call.message.chat.id, call.message.message_id, parse_mode='Markdown')
+    if not data: return
+    
+    bot.edit_message_text(f"📥 Yuklanmoqda...", call.message.chat.id, call.message.message_id)
+    
     ydl_opts = {
-        'format': 'bestaudio/best', 'outtmpl': '%(title)s.%(ext)s', 'quiet': True, 'noplaylist': True,
-        'postprocessors': [{'key': 'FFmpegExtractAudio', 'preferredcodec': 'mp3', 'preferredquality': '192'}],
+        'format': 'bestaudio/best',
+        'outtmpl': '%(title)s.%(ext)s',
+        'quiet': True,
     }
+    
     try:
         with yt_dlp.YoutubeDL(ydl_opts) as ydl:
             info = ydl.extract_info(data['url'], download=True)
             filename = ydl.prepare_filename(info)
-            if not filename.endswith('.mp3'):
-                base = os.path.splitext(filename)[0]
-                os.rename(filename, base + ".mp3")
-                filename = base + ".mp3"
+
         with open(filename, 'rb') as audio:
             bot.send_audio(call.message.chat.id, audio, title=data['title'], performer=data['performer'])
-        if os.path.exists(filename): os.remove(filename)
+            
+        if os.path.exists(filename):
+            os.remove(filename)
         bot.delete_message(call.message.chat.id, call.message.message_id)
     except:
-        bot.send_message(call.message.chat.id, "❌ Yuklashda xato!")
+        bot.send_message(call.message.chat.id, "❌ Xato!")
 
 bot.infinity_polling()
