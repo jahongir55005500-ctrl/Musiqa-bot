@@ -109,4 +109,3 @@ def download_selected(call):
         bot.send_message(call.message.chat.id, "❌ Yuklashda xatolik!")
 
 bot.infinity_polling()
-
