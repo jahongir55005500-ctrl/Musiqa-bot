@@ -5,8 +5,6 @@ import os
 
 # YANGI TOKENNI SHU YERGA QO'YING
 TOKEN = '8350288555:AAFoUPWjWDzSu5xp_0q8LJZ5XlZACmI0K7A'
-KANAL_1 = '@uz_kayfiyat_kliplar'
-KANAL_2 = '@waveoffeelings001'
 bot = telebot.TeleBot(TOKEN)
 
 def check_sub(user_id):
