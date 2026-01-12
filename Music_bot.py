@@ -4,7 +4,7 @@ import yt_dlp
 import os
 
 # MA'LUMOTLAR
-TOKEN = '8150288555:AAFoUPWjWDzSuSxp_Dq8LJZSXZACm1OK7A'
+TOKEN = '8350288555:AAEpHqPxt_U6Bw6FQwYRUNNT3yCbDwasToo'
 bot = telebot.TeleBot(TOKEN)
 
 # Foydalanuvchini bazaga qo'shish (Statistika uchun)
